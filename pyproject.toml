@@ -1,0 +1,38 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "text_classification_example"
+version = "0.0.1"
+description = "text classificatoin example"
+authors = [
+  { name = "u-masao" },
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
+dependencies = [
+    "pip",
+    "pytest",
+    "python-dotenv",
+    "ruff",
+]
+requires-python = "~=3.12.0"
+
+
+[tool.ruff]
+line-length = 99
+src = ["text_classification_example"]
+include = ["pyproject.toml", "text_classification_example/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["text_classification_example"]
+force-sort-within-sections = true
+
