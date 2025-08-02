@@ -47,8 +47,9 @@ create_environment:
 
 ## run dvc repro
 .PHONY: repro
-repro: check_commit
+repro: check_commit PIPELINE.md
 	uv run dvc repro
+	git commit dvc.lock -m 'run dvc repro' || true
 
 ## check commit
 .PHONY: check_commit
@@ -64,6 +65,7 @@ PIPELINE.md: dvc.yaml params.yaml
 	uv run dvc dag --md >> $@
 	echo -n '\n## detail\n\n' >> $@
 	uv run dvc dag --md --outs >> $@
+	git commit $@ -m 'update dvc pipeline' || true
 
 ## run mlflow ui
 .PHONY: mlflow_ui
