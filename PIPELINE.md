@@ -18,9 +18,9 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-	node1["data/interim/dataset_test.pickle"]
-	node2["data/interim/dataset_train.pickle"]
-	node3["data/interim/dataset_valid.pickle"]
+	node1["data/interim/dataset_test.parquet"]
+	node2["data/interim/dataset_train.parquet"]
+	node3["data/interim/dataset_valid.parquet"]
 	node4["data/processed/llm-jp-3-minimum/metrics.json"]
 	node5["data/raw/dataset.parquet"]
 	node6["models/llm-jp-3-minimum"]
