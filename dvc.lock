@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  download_dataset:
+    cmd: uv run python -m text_classification_example.download_dataset 
+      kunishou/J-ResearchCorpus data/raw/dataset.pickle ; echo aa > 
+      data/raw/dataset.pickle
+    deps:
+    - path: text_classification_example/download_dataset.py
+      hash: md5
+      md5: d41d8cd98f00b204e9800998ecf8427e
+      size: 0
+    outs:
+    - path: data/raw/dataset.pickle
+      hash: md5
+      md5: d404401c8c6495b206fc35c95e55a6d5
+      size: 3
