@@ -48,8 +48,8 @@ create_environment:
 ## run dvc repro
 .PHONY: repro
 repro: check_commit PIPELINE.md
-	uv run dvc repro
-	git commit dvc.lock -m 'run dvc repro' || true
+	uv run dvc repro || git commit dvc.lock -m 'run dvc repro with error' || true
+	git commit dvc.lock -m 'run dvc repro without error' || true
 
 ## check commit
 .PHONY: check_commit
