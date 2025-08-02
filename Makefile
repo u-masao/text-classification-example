@@ -5,19 +5,16 @@
 PROJECT_NAME = text-classification-example
 PYTHON_VERSION = 3.12
 PYTHON_INTERPRETER = python
+PACKAGE_NAME = text_classification_example
 
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
 
-
 ## Install Python dependencies
 .PHONY: requirements
 requirements:
 	uv sync
-	
-
-
 
 ## Delete all compiled Python files
 .PHONY: clean
@@ -25,26 +22,16 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-
 ## Lint using ruff (use `make format` to do formatting)
 .PHONY: lint
 lint:
-	ruff format --check
-	ruff check
-
-## Format source code with ruff
-.PHONY: format
-format:
-	ruff check --fix
-	ruff format
-
-
+	uv run ruff check --fix tests $(PACKAGE_NAME)
+	uv run ruff format tests $(PACKAGE_NAME)
 
 ## Run tests
 .PHONY: test
 test:
-	python -m pytest tests
-
+	uv run python -m pytest tests
 
 ## Set up Python interpreter environment
 .PHONY: create_environment
@@ -53,15 +40,35 @@ create_environment:
 	@echo ">>> New uv virtual environment created. Activate with:"
 	@echo ">>> Windows: .\\\\.venv\\\\Scripts\\\\activate"
 	@echo ">>> Unix/macOS: source ./.venv/bin/activate"
-	
-
-
 
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
 
+## run dvc repro
+.PHONY: repro
+repro: check_commit
+	uv run dvc repro
 
+## check commit
+.PHONY: check_commit
+check_commit:
+	git status
+	git diff --exit-code
+	git diff --exit-code --staged
+
+## make pipeline
+PIPELINE.md: dvc.yaml params.yaml
+	echo -n '# DVC pipeline\n' > $@
+	echo -n '\n## summary\n\n' >> $@
+	uv run dvc dag --md >> $@
+	echo -n '\n## detail\n\n' >> $@
+	uv run dvc dag --md --outs >> $@
+
+## run mlflow ui
+.PHONY: mlflow_ui
+mlflow_ui:
+	uv run mlflow ui -h 0.0.0.0 -p 5000 --backend-store-uri sqlite:///mlruns.db
 
 #################################################################################
 # Self Documenting Commands                                                     #
