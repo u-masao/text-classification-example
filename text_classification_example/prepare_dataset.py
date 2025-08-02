@@ -34,13 +34,16 @@ class Experiment:
         # load dataset
         input_df = pd.read_parquet(self.args.input_filepath)
 
+        # log input
         print(input_df)
 
+        # split data
         result_df = {
             "train": input_df.iloc[:100],
             "valid": input_df.iloc[100:200],
             "test": input_df.iloc[200:300],
         }
+
 
         # output dataset
         result_df["train"].to_parquet(self.args.output_train_filepath)
