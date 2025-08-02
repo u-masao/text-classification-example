@@ -16,10 +16,11 @@ classifiers = [
     "License :: OSI Approved :: MIT License"
 ]
 dependencies = [
-    "pip",
-    "pytest",
-    "python-dotenv",
-    "ruff",
+    "datasets>=4.0.0",
+    "loguru>=0.7.3",
+    "mlflow>=3.1.4",
+    "transformers>=4.54.1",
+    "typed-argument-parser>=1.10.1",
 ]
 requires-python = "~=3.12.0"
 
@@ -35,4 +36,10 @@ extend-select = ["I"]  # Add import sorting
 [tool.ruff.lint.isort]
 known-first-party = ["text_classification_example"]
 force-sort-within-sections = true
+
+[dependency-groups]
+dev = [
+    "dvc>=3.61.0",
+    "ruff>=0.12.7",
+]
 
