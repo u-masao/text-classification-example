@@ -2,15 +2,15 @@ schema: '2.0'
 stages:
   download_dataset:
     cmd: uv run python -m text_classification_example.download_dataset 
-      kunishou/J-ResearchCorpus data/raw/dataset.pickle ; echo aa > 
-      data/raw/dataset.pickle
+      --dataset_name kunishou/J-ResearchCorpus --output_filepath 
+      data/raw/dataset.parquet --mlflow_run_name pipeline
     deps:
     - path: text_classification_example/download_dataset.py
       hash: md5
-      md5: d41d8cd98f00b204e9800998ecf8427e
-      size: 0
+      md5: d4b5f13b2bbd3fbe18a43d9c17f29494
+      size: 1266
     outs:
-    - path: data/raw/dataset.pickle
+    - path: data/raw/dataset.parquet
       hash: md5
-      md5: d404401c8c6495b206fc35c95e55a6d5
-      size: 3
+      md5: e08e48410042003244793e25c83c908d
+      size: 37955183
