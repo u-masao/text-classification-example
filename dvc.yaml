@@ -4,8 +4,8 @@ stages:
   download_dataset:
     cmd: >-
       uv run python -m text_classification_example.download_dataset
-      kunishou/J-ResearchCorpus
-      data/raw/dataset.pickle
+      --dataset_name kunishou/J-ResearchCorpus
+      --output_filepath data/raw/dataset.pickle
     deps:
       - text_classification_example/download_dataset.py
     outs:
