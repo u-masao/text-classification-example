@@ -1,0 +1,64 @@
+stages:
+
+  # download dataset
+  download_dataset:
+    cmd: >-
+      uv run python -m text_classification_example.download_dataset
+      kunishou/J-ResearchCorpus
+      data/raw/dataset.pickle
+    deps:
+      - text_classification_example/download_dataset.py
+    outs:
+      - data/raw/dataset.pickle
+
+  # prepare dataset
+  prepare_dataset:
+    cmd: >-
+      uv run python -m text_classification_example.prepare_dataset
+      data/raw/dataset.pickle
+      data/interim/dataset_train.pickle
+      data/interim/dataset_valid.pickle
+      data/interim/dataset_test.pickle
+    outs:
+      - text_classification_example/prepare_dataset.py
+      - data/raw/dataset.pickle
+    deps:
+      - data/interim/dataset_train.pickle
+      - data/interim/dataset_valid.pickle
+      - data/interim/dataset_test.pickle
+
+  # train model
+  train:
+    foreach: ${train.config}
+    do:
+      cmd: >-
+        echo uv run python -m text_classification_example.train
+        ${item.model-name}
+        --epochs ${item.epochs}
+        --max-seq-length ${item.max-seq-length}
+        data/interim/dataset_train.pickle
+        data/interim/dataset_valid.pickle
+        data/interim/dataset_test.pickle
+      outs:
+        - text_classification_example/train.py
+        - data/interim/dataset_train.pickle
+        - data/interim/dataset_valid.pickle
+        - data/interim/dataset_test.pickle
+      deps:
+        - models/${item.name}/
+
+  # evaluate model
+  evaluate:
+    foreach: ${train.config}
+    do:
+      cmd: >-
+        echo uv run python -m text_classification_example.evaluate
+        models/${item.name}/
+        data/interim/dataset_test.pickle
+        data/processed/${item.name}/metrics.json
+      outs:
+        - text_classification_example/evaluate.py
+        - models/${item.name}/
+        - data/interim/dataset_test.pickle
+      deps:
+        - data/processed/${item.name}/metrics.json

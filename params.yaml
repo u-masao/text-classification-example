@@ -1,0 +1,6 @@
+train:
+  config: 
+    - name: llm-jp-3-minimum
+      model-name: llm-jp/llm-jp-3-150m
+      epochs: 2
+      max-seq-length: 32
