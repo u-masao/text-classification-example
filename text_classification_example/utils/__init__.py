@@ -1,7 +1,17 @@
+import argparse
 from contextlib import contextmanager
+from pathlib import Path
 
 import mlflow
 from mlflow import ActiveRun
+
+
+# ファイル存在チェックを行う関数
+def existing_file_path(path_str: str) -> Path:
+    path = Path(path_str)
+    if not path.is_file():
+        raise argparse.ArgumentTypeError(f"ファイルが見つかりません: '{path}'")
+    return path
 
 
 @contextmanager
