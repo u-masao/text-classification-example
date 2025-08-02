@@ -9,11 +9,11 @@ def mlflow_start_run(
     interval: int = 10,
     samples: int = 1,
 ) -> ActiveRun:
+    mlflow.set_tracking_uri(tracking_uri)
+    mlflow.set_experiment(experiment_name)
+    active_run = mlflow.start_run(run_name=run_name)
     mlflow.set_system_metrics_sampling_interval(interval)
     mlflow.set_system_metrics_samples_before_logging(samples)
-    mlflow.set_experiment(experiment_name)
-    mlflow.set_tracking_uri(tracking_uri)
-    active_run = mlflow.start_run(run_name=run_name)
     mlflow.enable_system_metrics_logging()
     return active_run
 
