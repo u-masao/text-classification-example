@@ -2,6 +2,7 @@ from pathlib import Path
 
 from loguru import logger
 import mlflow
+import pandas as pd
 from tap import Tap
 
 from .utils import existing_filepath, mlflow_start_run
@@ -30,7 +31,21 @@ class Experiment:
         self.args = args
 
     def run(self) -> None:
-        pass
+        # load dataset
+        input_df = pd.read_parquet(self.args.input_filepath)
+
+        print(input_df)
+
+        result_df = {
+            "train": input_df.iloc[:100],
+            "valid": input_df.iloc[100:200],
+            "test": input_df.iloc[200:300],
+        }
+
+        # output dataset
+        result_df["train"].to_parquet(self.args.output_train_filepath)
+        result_df["valid"].to_parquet(self.args.output_valid_filepath)
+        result_df["test"].to_parquet(self.args.output_test_filepath)
 
 
 def main(args: Args) -> None:
