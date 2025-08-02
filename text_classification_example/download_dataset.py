@@ -23,7 +23,7 @@ class Experiment:
 
 
 def main(args: Args) -> None:
-    mlflow_start_run(expoeriment_name="download_dataset")
+    mlflow_start_run(experiment_name="download_dataset")
     mlflow.log_params(args.as_dict())
     logger.info(args.as_dict())
 
