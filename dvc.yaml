@@ -5,23 +5,24 @@ stages:
     cmd: >-
       uv run python -m text_classification_example.download_dataset
       --dataset_name kunishou/J-ResearchCorpus
-      --output_filepath data/raw/dataset.pickle
+      --output_filepath data/raw/dataset.parquet
+      --mlflow_run_name pipeline
     deps:
       - text_classification_example/download_dataset.py
     outs:
-      - data/raw/dataset.pickle
+      - data/raw/dataset.parquet
 
   # prepare dataset
   prepare_dataset:
     cmd: >-
       uv run python -m text_classification_example.prepare_dataset
-      data/raw/dataset.pickle
+      data/raw/dataset.parquet
       data/interim/dataset_train.pickle
       data/interim/dataset_valid.pickle
       data/interim/dataset_test.pickle
     deps:
       - text_classification_example/prepare_dataset.py
-      - data/raw/dataset.pickle
+      - data/raw/dataset.parquet
     outs:
       - data/interim/dataset_train.pickle
       - data/interim/dataset_valid.pickle
