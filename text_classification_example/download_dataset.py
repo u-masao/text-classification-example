@@ -5,7 +5,7 @@ from loguru import logger
 import mlflow
 from tap import Tap
 
-from .utils import mlflow_end_run, mlflow_start_run
+from .utils import mlflow_start_run
 
 
 class Args(Tap):
@@ -66,14 +66,12 @@ def main(args: Args) -> None:
             experiment = Experiment(args)
             experiment.run()
 
-            # クリーンアップ
-            mlflow_end_run()
-
             # 処理完了のログ
             logger.info("==== 処理完了 ====")
 
     except Exception as e:
-        logger.error(f"エラー発生: {e}")
+        logger.error("==== 異常修了 ====")
+        logger.error(f"エラー内容: {e}")
         raise e
 
 
