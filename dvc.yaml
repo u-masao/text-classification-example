@@ -19,10 +19,10 @@ stages:
       data/interim/dataset_train.pickle
       data/interim/dataset_valid.pickle
       data/interim/dataset_test.pickle
-    outs:
+    deps:
       - text_classification_example/prepare_dataset.py
       - data/raw/dataset.pickle
-    deps:
+    outs:
       - data/interim/dataset_train.pickle
       - data/interim/dataset_valid.pickle
       - data/interim/dataset_test.pickle
@@ -39,12 +39,12 @@ stages:
         data/interim/dataset_train.pickle
         data/interim/dataset_valid.pickle
         data/interim/dataset_test.pickle
-      outs:
+      deps:
         - text_classification_example/train.py
         - data/interim/dataset_train.pickle
         - data/interim/dataset_valid.pickle
         - data/interim/dataset_test.pickle
-      deps:
+      outs:
         - models/${item.name}/
 
   # evaluate model
@@ -56,9 +56,9 @@ stages:
         models/${item.name}/
         data/interim/dataset_test.pickle
         data/processed/${item.name}/metrics.json
-      outs:
+      deps:
         - text_classification_example/evaluate.py
         - models/${item.name}/
         - data/interim/dataset_test.pickle
-      deps:
+      outs:
         - data/processed/${item.name}/metrics.json
