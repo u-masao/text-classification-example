@@ -5,10 +5,14 @@ stages:
       --dataset_name kunishou/J-ResearchCorpus --output_filepath 
       data/raw/dataset.parquet --mlflow_run_name pipeline
     deps:
+    - path: text_classification_example/__init__.py
+      hash: md5
+      md5: d41d8cd98f00b204e9800998ecf8427e
+      size: 0
     - path: text_classification_example/download_dataset.py
       hash: md5
-      md5: d4b5f13b2bbd3fbe18a43d9c17f29494
-      size: 1266
+      md5: 4e2d30db48604a991674ce34c5b66d4a
+      size: 1884
     outs:
     - path: data/raw/dataset.parquet
       hash: md5
