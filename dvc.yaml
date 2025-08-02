@@ -9,6 +9,7 @@ stages:
       --mlflow_run_name pipeline
     deps:
       - text_classification_example/download_dataset.py
+      - text_classification_example/__init__.py
     outs:
       - data/raw/dataset.parquet
 
