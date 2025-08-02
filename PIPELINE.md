@@ -13,6 +13,7 @@ flowchart TD
 	node3-->node4
 	node4-->node2
 ```
+
 ## detail
 
 ```mermaid
@@ -21,7 +22,7 @@ flowchart TD
 	node2["data/interim/dataset_train.pickle"]
 	node3["data/interim/dataset_valid.pickle"]
 	node4["data/processed/llm-jp-3-minimum/metrics.json"]
-	node5["data/raw/dataset.pickle"]
+	node5["data/raw/dataset.parquet"]
 	node6["models/llm-jp-3-minimum"]
 	node1-->node4
 	node1-->node6
