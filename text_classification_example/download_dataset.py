@@ -11,6 +11,8 @@ from .utils import mlflow_end_run, mlflow_start_run
 class Args(Tap):
     dataset_name: str
     output_filepath: Path
+    mlflow_run_name: str | None = None
+    split_name: str = "train"
 
 
 class Experiment:
@@ -18,8 +20,25 @@ class Experiment:
         self.args = args
 
     def run(self) -> None:
-        dataset = load_dataset(self.dataset_name)
+        # download dataset
+        dataset = load_dataset(self.args.dataset_name, split=self.args.split_name)
+
+        # log summary
         logger.info(dataset)
+
+        # make output dir
+        self.args.output_filepath.parent.mkdir(parents=True, exist_ok=True)
+
+        # output
+        dataset.to_parquet(self.args.output_filepath)
+
+        # logging
+        mlflow.log_metrics(
+            {
+                "num_rows": dataset.num_rows,
+            }
+        )
+        mlflow.log_text(str(dataset), "dataset_summary.txt")
 
 
 def main(args: Args) -> None:
