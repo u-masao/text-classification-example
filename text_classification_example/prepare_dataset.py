@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from datasets import load_dataset
 from loguru import logger
 import mlflow
 from tap import Tap
@@ -21,7 +20,7 @@ class Args(Tap):
 
     def configure(self):
         # input definition
-        self.add_argument("input_filepath", type=existing_filepath)
+        self.add_argument("--input_filepath", type=existing_filepath)
 
 
 class Experiment:
@@ -31,25 +30,7 @@ class Experiment:
         self.args = args
 
     def run(self) -> None:
-        # download dataset
-        dataset = load_dataset(self.args.dataset_name, split=self.args.split_name)
-
-        # log summary
-        logger.info(dataset)
-
-        # make output dir
-        self.args.output_filepath.parent.mkdir(parents=True, exist_ok=True)
-
-        # output
-        dataset.to_parquet(self.args.output_filepath)
-
-        # logging
-        mlflow.log_metrics(
-            {
-                "num_rows": dataset.num_rows,
-            }
-        )
-        mlflow.log_text(str(dataset), "dataset_summary.txt")
+        pass
 
 
 def main(args: Args) -> None:
