@@ -9,13 +9,22 @@ from .utils import mlflow_end_run, mlflow_start_run
 
 
 class Args(Tap):
+    """動作オプションの管理"""
+
+    # dataset definition
     dataset_name: str
-    output_filepath: Path
-    mlflow_run_name: str | None = None
     split_name: str = "train"
+
+    # output definition
+    output_filepath: Path
+
+    # experiment managemento definition
+    mlflow_run_name: str | None = None
 
 
 class Experiment:
+    """実験の定義と処理"""
+
     def __init__(self, args: Args):
         self.args = args
 
@@ -42,13 +51,30 @@ class Experiment:
 
 
 def main(args: Args) -> None:
-    mlflow_start_run(experiment_name="download_dataset")
-    mlflow.log_params(args.as_dict())
+    """メイン処理: 実験記録の定義と実験の呼び出し"""
+
+    # log cli args
     logger.info(args.as_dict())
 
-    experiment = Experiment(args)
-    experiment.run()
-    mlflow_end_run()
+    try:
+        # init mlflow
+        with mlflow_start_run(experiment_name="download_dataset", run_name=args.mlflow_run_name):
+            # 引数を記録
+            mlflow.log_params(args.as_dict())
+
+            # 実験の初期化と実行
+            experiment = Experiment(args)
+            experiment.run()
+
+            # クリーンアップ
+            mlflow_end_run()
+
+            # 処理完了のログ
+            logger.info("==== 処理完了 ====")
+
+    except Exception as e:
+        logger.error(f"エラー発生: {e}")
+        raise e
 
 
 if __name__ == "__main__":
