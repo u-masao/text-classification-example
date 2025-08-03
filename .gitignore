@@ -193,3 +193,6 @@ cython_debug/
 # mlflow
 /mlruns/
 /mlruns.db
+
+# ignore object_cache
+/.object_cache/
