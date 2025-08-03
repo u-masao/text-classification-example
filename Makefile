@@ -41,6 +41,13 @@ create_environment:
 	@echo ">>> Windows: .\\\\.venv\\\\Scripts\\\\activate"
 	@echo ">>> Unix/macOS: source ./.venv/bin/activate"
 
+## setup ollama
+.PHONY: setup_ollama
+setup_ollama:
+	curl -fsSL https://ollama.com/install.sh | sh
+	ollama pull gemma3:4b
+	ollama list
+
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
