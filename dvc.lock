@@ -18,3 +18,31 @@ stages:
       hash: md5
       md5: e08e48410042003244793e25c83c908d
       size: 37955183
+  prepare_dataset:
+    cmd: uv run python -m text_classification_example.prepare_dataset 
+      --input_filepath data/raw/dataset.parquet --output_train_filepath 
+      data/interim/dataset_train.parquet --output_valid_filepath 
+      data/interim/dataset_valid.parquet --output_test_filepath 
+      data/interim/dataset_test.parquet
+    deps:
+    - path: data/raw/dataset.parquet
+      hash: md5
+      md5: e08e48410042003244793e25c83c908d
+      size: 37955183
+    - path: text_classification_example/prepare_dataset.py
+      hash: md5
+      md5: 3513afae88b50a2fac3879a2e5cc0249
+      size: 2025
+    outs:
+    - path: data/interim/dataset_test.parquet
+      hash: md5
+      md5: 3061a18750fda59eaacc70052cf059ca
+      size: 1102820
+    - path: data/interim/dataset_train.parquet
+      hash: md5
+      md5: 7e39f21c07486f3233620e4ea9e8110d
+      size: 1070320
+    - path: data/interim/dataset_valid.parquet
+      hash: md5
+      md5: da0d4ffefe69af5b91b5224ffc7fff30
+      size: 1097246
