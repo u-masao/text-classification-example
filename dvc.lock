@@ -31,18 +31,18 @@ stages:
       size: 37955183
     - path: text_classification_example/prepare_dataset.py
       hash: md5
-      md5: 3513afae88b50a2fac3879a2e5cc0249
-      size: 2025
+      md5: 1ffea4c89edfa83cda211f2552e01d74
+      size: 6612
     outs:
     - path: data/interim/dataset_test.parquet
       hash: md5
-      md5: 3061a18750fda59eaacc70052cf059ca
-      size: 1102820
+      md5: a5a5da347f82b414e0f5bc61d112d0f9
+      size: 3448
     - path: data/interim/dataset_train.parquet
       hash: md5
-      md5: 7e39f21c07486f3233620e4ea9e8110d
-      size: 1070320
+      md5: 2a678b1e1f343155c79e55b632aa9cd3
+      size: 23958
     - path: data/interim/dataset_valid.parquet
       hash: md5
-      md5: da0d4ffefe69af5b91b5224ffc7fff30
-      size: 1097246
+      md5: a5a5da347f82b414e0f5bc61d112d0f9
+      size: 3448
