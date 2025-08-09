@@ -6,6 +6,7 @@ PROJECT_NAME = text-classification-example
 PYTHON_VERSION = 3.12
 PYTHON_INTERPRETER = python
 PACKAGE_NAME = text_classification_example
+OLLAMA_MODEL_NAME = gemma3:1b
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -45,7 +46,7 @@ create_environment:
 .PHONY: setup_ollama
 setup_ollama:
 	curl -fsSL https://ollama.com/install.sh | sh
-	ollama pull gemma3:4b
+	ollama pull $(OLLAMA_MODEL_NAME)
 	ollama list
 
 #################################################################################
