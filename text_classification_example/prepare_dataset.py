@@ -57,7 +57,6 @@ def generate_response_ollama(
     max_retry: int = 5,
     temperature_delta: float = 0.01,
 ):
-    return {}
     user_prompt = f"""
         評価規定に従い次のテキストを評価して。
         必ずすべての項目を評価して。
@@ -135,8 +134,6 @@ class Experiment:
         # load dataset
         input_df = pd.read_parquet(self.args.input_filepath)
 
-        input_df = input_df.head(100)
-
         # log input
         print(input_df)
 
@@ -162,10 +159,10 @@ class Experiment:
         # データ分割
         train_df, valid_df, test_df = self._split_dataframe(
             result_df,
-            train_ratio=self.args.dataset.train_ratio,
-            valid_ratio=self.args.dataset.valid_ratio,
-            test_ratio=self.args.dataset.test_ratio,
-            random_seed=self.args.dataset.split_random_seed,
+            train_ratio=self.args.train_ratio,
+            valid_ratio=self.args.valid_ratio,
+            test_ratio=self.args.test_ratio,
+            random_seed=self.args.split_random_seed,
         )
 
         # output dataset
